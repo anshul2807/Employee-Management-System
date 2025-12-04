@@ -51,7 +51,9 @@ public class EmployeeService {
         return saveEmp;
     }
 
-//    Employee updateEmployee(String id, EmployeeDTO employeeDTO);
+    public void updateEmployee(Employee updatedEmp){
+        employeeRepository.save(updatedEmp);
+    }
 
 //    Employee updateJobAndDept(String id, String newJobTitleId, String newDepartmentId);
 

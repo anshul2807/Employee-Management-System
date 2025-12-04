@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -63,7 +64,7 @@ public class AuthController {
             return new ResponseEntity<>("Error in Request",HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/pwd-change")
+    @PutMapping("/pwd-change")
     public ResponseEntity<?> passwordChange(@RequestBody User updatedEntry){
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,4 +76,27 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping("/admin-pwd-change")
+    public ResponseEntity<?> passwordChangeByAdmin(@RequestBody User updatedEntry){
+        try {
+            User user = userRepository.findByUsername(updatedEntry.getUsername());
+            if(user == null)
+                return new ResponseEntity<>("User Not Found",HttpStatus.NOT_FOUND);
+            user.setPassword(passwordEncoder.encode(updatedEntry.getPassword()));
+            userService.userUpdate(user);
+            return new ResponseEntity<>("Password Updated",HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/all-users")
+    public ResponseEntity<?> listAllUsers(){
+        try {
+            List<User> list = userService.findAllUsers();
+            return new ResponseEntity<>(list,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

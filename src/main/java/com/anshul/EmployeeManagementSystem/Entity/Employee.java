@@ -1,6 +1,7 @@
 package com.anshul.EmployeeManagementSystem.Entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -28,6 +29,7 @@ class Address{
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Employee {
     @Id
     private ObjectId id;

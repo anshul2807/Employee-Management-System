@@ -26,8 +26,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(req->req
                         .requestMatchers("/lookups/**").authenticated()
-                        .requestMatchers("/employee/**","/auth/register").hasRole("ADMIN")
+                        .requestMatchers("/employee/updateByUser").authenticated()
                         .requestMatchers("/auth/pwd-change").authenticated()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/employee/**","/auth/**").hasRole("ADMIN")
                         .anyRequest().permitAll()).csrf(AbstractHttpConfigurer::disable)
                         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                         .build();
