@@ -94,7 +94,6 @@ Controller → Service → Repository → MongoDB
 * **DTOs** are used for request/response serialization.
 * **MongoDB collections** store employees, users, and lookup records.
 
-(If you want an architecture diagram or ERD, I can generate one!)
 
 ---
 
