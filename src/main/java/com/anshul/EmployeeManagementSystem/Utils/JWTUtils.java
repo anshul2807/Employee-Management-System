@@ -1,4 +1,5 @@
 package com.anshul.EmployeeManagementSystem.Utils;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -6,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -38,8 +40,10 @@ public class JWTUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(ObjectId id, List<String> role,String username) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id",id);
+        claims.put("role",role);
         return createToken(claims, username);
     }
 
