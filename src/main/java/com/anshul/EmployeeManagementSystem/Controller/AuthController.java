@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,7 +61,12 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
             UserDetails userDetails = myUserServiceDetails.loadUserByUsername(user.getUsername());
             User loginUser = userRepository.findByUsername(user.getUsername());
-            String authToken = jwtUtils.generateToken(loginUser.getId(),loginUser.getRole(),userDetails.getUsername());
+            List<String> allRoles = new ArrayList<>();
+            if(loginUser.getEmpRef() != null){
+                allRoles = loginUser.getEmpRef().getRole();
+            }
+            allRoles.addAll(loginUser.getRole());
+            String authToken = jwtUtils.generateToken(loginUser.getId(),allRoles,userDetails.getUsername());
             LoginUserDTO loginUserDTO = LoginUserDTO.builder()
                     .token(authToken)
                     .roles(loginUser.getRole())
