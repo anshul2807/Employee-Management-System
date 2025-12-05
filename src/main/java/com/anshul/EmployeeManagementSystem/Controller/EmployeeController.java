@@ -80,11 +80,11 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping("/updateByAdmin")
-    public ResponseEntity<?> updateEmployeeByAdmin(@RequestBody Employee emp){
+    @PutMapping("/updateByAdmin/{userName}")
+    public ResponseEntity<?> updateEmployeeByAdmin(@RequestBody Employee emp,@PathVariable String userName){
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User user = userRepository.findByUsername(authentication.getName());
+            User user = userRepository.findByUsername(userName);
             if(user.getEmpRef() == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -92,7 +92,6 @@ public class EmployeeController {
 
             usersEmployeeData.setFirstName(emp.getFirstName() == null ? usersEmployeeData.getFirstName() : emp.getFirstName());
             usersEmployeeData.setLastName(emp.getLastName() == null ? usersEmployeeData.getLastName() : emp.getLastName());
-            usersEmployeeData.setEmail(emp.getEmail() == null ? usersEmployeeData.getEmail() : emp.getEmail());
             usersEmployeeData.setPhoneNumber(emp.getPhoneNumber() == null ? usersEmployeeData.getPhoneNumber() : emp.getPhoneNumber());
             usersEmployeeData.setDateOfBirth(emp.getDateOfBirth() == null ? usersEmployeeData.getDateOfBirth() : emp.getDateOfBirth());
             usersEmployeeData.setJoinDate(emp.getJoinDate() == null ? usersEmployeeData.getJoinDate() : emp.getJoinDate());

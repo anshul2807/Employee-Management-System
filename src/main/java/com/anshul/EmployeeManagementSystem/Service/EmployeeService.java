@@ -43,7 +43,7 @@ public class EmployeeService {
         emp.setStatus("ACTIVE");
         Employee saveEmp = employeeRepository.save(emp);
         User newUser = new User();
-        newUser.setUsername(saveEmp.getFirstName());
+        newUser.setUsername(saveEmp.getEmail().substring(0, saveEmp.getEmail().indexOf('@')));
         newUser.setPassword(passwordEncoder.encode("default"));
         newUser.setRole(Arrays.asList("USER"));
         newUser.setEmpRef(saveEmp);
