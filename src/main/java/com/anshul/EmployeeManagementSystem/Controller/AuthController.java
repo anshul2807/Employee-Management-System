@@ -1,5 +1,6 @@
 package com.anshul.EmployeeManagementSystem.Controller;
 
+import com.anshul.EmployeeManagementSystem.Entity.LoginUserDTO;
 import com.anshul.EmployeeManagementSystem.Entity.User;
 import com.anshul.EmployeeManagementSystem.Repository.UserRepository;
 import com.anshul.EmployeeManagementSystem.Service.MyUserServiceDetails;
@@ -59,7 +60,13 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
             UserDetails userDetails = myUserServiceDetails.loadUserByUsername(user.getUsername());
             String authToken = jwtUtils.generateToken(userDetails.getUsername());
-            return new ResponseEntity<>(authToken,HttpStatus.OK);
+            User loginUser = userRepository.findByUsername(user.getUsername());
+            LoginUserDTO loginUserDTO = LoginUserDTO.builder()
+                    .token(authToken)
+                    .roles(loginUser.getRole())
+                    .user(loginUser).build();
+
+            return new ResponseEntity<>(loginUserDTO,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in Request",HttpStatus.BAD_REQUEST);
         }
