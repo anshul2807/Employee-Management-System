@@ -53,7 +53,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user){
         try {
             authenticationManager.authenticate(
