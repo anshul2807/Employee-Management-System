@@ -1,5 +1,7 @@
 package com.anshul.EmployeeManagementSystem.Entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,7 @@ class Address{
 @AllArgsConstructor
 @Builder
 public class Employee {
+    @JsonSerialize(using = ToStringSerializer.class)
     @Id
     private ObjectId id;
 
@@ -45,9 +48,11 @@ public class Employee {
 
     private LocalDate joinDate;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId jobTitleId;
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId departmentId;
-
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId managerId;
 
     private String status;

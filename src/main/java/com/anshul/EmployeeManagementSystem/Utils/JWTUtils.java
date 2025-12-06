@@ -40,7 +40,7 @@ public class JWTUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(ObjectId id, List<String> role,String username) {
+    public String generateToken(String id, List<String> role,String username) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id",id);
         claims.put("role",role);

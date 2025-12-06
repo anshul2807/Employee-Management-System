@@ -1,5 +1,7 @@
 package com.anshul.EmployeeManagementSystem.Entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User {
+    @JsonSerialize(using = ToStringSerializer.class)
     @Id
     private ObjectId id;
 

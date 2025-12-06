@@ -6,6 +6,7 @@ import com.anshul.EmployeeManagementSystem.Repository.UserRepository;
 import com.anshul.EmployeeManagementSystem.Service.MyUserServiceDetails;
 import com.anshul.EmployeeManagementSystem.Service.UserService;
 import com.anshul.EmployeeManagementSystem.Utils.JWTUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class AuthController {
                 allRoles = loginUser.getEmpRef().getRole();
             }
             allRoles.addAll(loginUser.getRole());
-            String authToken = jwtUtils.generateToken(loginUser.getId(),allRoles,userDetails.getUsername());
+            String authToken = jwtUtils.generateToken(loginUser.getId().toString(),allRoles,userDetails.getUsername());
             LoginUserDTO loginUserDTO = LoginUserDTO.builder()
                     .token(authToken)
                     .roles(loginUser.getRole())
@@ -111,5 +112,18 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/userid/{myId}")
+    public ResponseEntity<?> getUserById(@PathVariable ObjectId myId){
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User user = userRepository.findByUsername(authentication.getName());
+            if(!user.getId().equals(myId))
+                return new ResponseEntity<>("Not Authorize",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
 
 }

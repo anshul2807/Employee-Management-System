@@ -28,7 +28,7 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(req->req
                         .requestMatchers("/lookups/**").authenticated()
                         .requestMatchers("/employee/updateByUser").authenticated()
-                        .requestMatchers("/auth/pwd-change").authenticated()
+                        .requestMatchers("/auth/pwd-change","/auth/userid/**").authenticated()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/employee/**","/auth/**").hasRole("ADMIN")
                         .anyRequest().permitAll()).csrf(AbstractHttpConfigurer::disable)
