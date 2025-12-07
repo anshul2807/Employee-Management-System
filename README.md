@@ -144,6 +144,11 @@ java -jar target/<your-artifact-name>.jar
 
 The service will start on **[http://localhost:8080](http://localhost:8080)**.
 
+or You can use the deployed version
+```bash
+https://floating-chamber-86262-8288901086e3.herokuapp.com/
+```
+
 ---
 
 ## 🔒 Security & Authorization
