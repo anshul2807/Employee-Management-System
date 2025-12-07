@@ -18,7 +18,7 @@ public class CorsConfig {
 
         // ⬅️ IMPORTANT: Set your frontend's exact URL/port here!
         config.addAllowedOrigin("http://localhost:5173");
-
+        config.addAllowedOrigin("https://anshul2807.github.io");
         // Allow common methods
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
