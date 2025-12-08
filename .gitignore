@@ -14,11 +14,15 @@ src/main/resources/application.yml
 .springBeans
 .sts4-cache
 .env
+
+
+/logs/
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.log
 
 ### NetBeans ###
 /nbproject/private/

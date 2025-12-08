@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="REQUEST_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/request-audit.log</file> <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+    </encoder>
+        <append>true</append>
+    </appender>
+
+    <logger name="REQUEST_AUDIT_LOG" level="INFO" additivity="false">
+        <appender-ref ref="REQUEST_FILE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+</configuration>
